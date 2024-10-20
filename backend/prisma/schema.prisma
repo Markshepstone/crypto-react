@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String       @id @default(uuid())
+  email         String       @unique
+  passwordHash  String
+  mobile        String?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  xrpAccounts   XrpAccount[]
+
+  @@map("users")
+}
+
+model XrpAccount {
+  id                  Int      @id @default(autoincrement())
+  address             String   @unique
+  owner               String?
+  encryptedPublicKey  String?  @db.LongText
+  encryptedPrivateKey String?  @db.LongText
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  balances            XrpBalance[]
+  userId              String
+  user                User     @relation(fields: [userId], references: [id])
+
+  @@map("xrp_accounts")
+}
+
+model XrpBalance {
+  id         Int      @id @default(autoincrement())
+  address    String
+  balance    Decimal  @db.Decimal(20, 6)
+  sequence   Int
+  ownerCount Int
+  timestamp  DateTime @default(now())
+  account    XrpAccount @relation(fields: [address], references: [address])
+
+  @@map("xrp_balances")
+}
