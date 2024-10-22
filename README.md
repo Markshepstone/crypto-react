@@ -1,3 +1,6 @@
+This project can not run on vercel without having a server to run the DB 
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
