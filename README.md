@@ -1,4 +1,4 @@
-This project can not run on vercel without having a server to run the DB 
+This project can not run on vercel without having a server to run the DB.
 
 
 # Getting Started with Create React App
